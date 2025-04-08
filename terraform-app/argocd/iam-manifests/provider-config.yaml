@@ -1,0 +1,12 @@
+apiVersion: tf.crossplane.io/v1alpha1
+kind: ProviderConfig
+metadata:
+  name: aws-provider
+  namespace: argocd
+spec:
+  credentials:
+    source: Secret
+    secretRef:
+      namespace: default
+      name: aws-credentials
+      key: credentials

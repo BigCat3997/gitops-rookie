@@ -16,8 +16,8 @@
 apiVersion: tf.crossplane.io/v1alpha1
 kind: TerraformResource
 metadata:
-  name: my-iam-resources
-  namespace: default # Or your desired namespace
+  name: iam-resources
+  namespace: argocd
 spec:
   providerRef:
     name: aws-provider # Ensure you have a configured AWS ProviderConfig in Crossplane
@@ -30,7 +30,8 @@ spec:
   vars:
     - name: region
       value: "ap-southeast-1"
-  # You can define outputs to be written to a connection secret
+  providerConfigRef:
+    name: aws-provider
   writeConnectionSecretToRef:
-    name: iam-connection
-    namespace: default
+    name: iam-resources
+    namespace: argocd
