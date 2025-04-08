@@ -1,14 +1,36 @@
-apiVersion: infra.contrib.hashicorp.com/v1alpha2
-kind: Terraform
+# apiVersion: infra.contrib.hashicorp.com/v1alpha2
+# kind: Terraform
+# metadata:
+#   name: my-iam-deployment
+#   namespace: argocd
+# spec:
+#   configurationSources:
+#     - git:
+#         repository: https://github.com/BigCat3997/gitops-rookie
+#         ref: HEAD
+#         path: terraform-app/terraform-resources/aws-iam
+#   secretRef:
+#     name: aws-credentials
+#   destroyDependsOn: []
+
+apiVersion: tf.crossplane.io/v1alpha1
+kind: TerraformResource
 metadata:
-  name: my-iam-deployment
-  namespace: argocd
+  name: my-iam-resources
+  namespace: default # Or your desired namespace
 spec:
-  configurationSources:
-    - git:
-        repository: https://github.com/BigCat3997/gitops-rookie
-        ref: HEAD
-        path: terraform-app/terraform-resources/aws-iam
-  secretRef:
-    name: aws-credentials
-  destroyDependsOn: []
+  providerRef:
+    name: aws-provider # Ensure you have a configured AWS ProviderConfig in Crossplane
+  resource:
+    source: Git
+    git:
+      repository: https://github.com/BigCat3997/gitops-rookie
+      ref: HEAD
+      path: terraform-app/terraform-resources/aws-iam
+  vars:
+    - name: region
+      value: "ap-southeast-1"
+  # You can define outputs to be written to a connection secret
+  writeConnectionSecretToRef:
+    name: iam-connection
+    namespace: default
