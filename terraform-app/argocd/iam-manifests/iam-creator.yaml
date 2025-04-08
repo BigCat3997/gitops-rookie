@@ -8,6 +8,7 @@ spec:
     - git:
         repository: https://github.com/BigCat3997/gitops-rookie
         ref: HEAD
-        path: terraform-app/terraform-resources
+        path: terraform-app/terraform-resources/aws-iam
   secretRef:
     name: aws-credentials
+  destroyDependsOn: []
