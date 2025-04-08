@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/BigCat3997/gitops-rookie.git
     targetRevision: HEAD
-    path: terraform-app
+    path: terraform-app/terraform-resources
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd

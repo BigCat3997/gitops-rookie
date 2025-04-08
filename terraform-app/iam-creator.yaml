@@ -1,0 +1,13 @@
+apiVersion: infra.contrib.hashicorp.com/v1alpha2
+kind: Terraform
+metadata:
+  name: my-iam-deployment
+  namespace: argocd
+spec:
+  configurationSources:
+    - git:
+        repository: https://github.com/BigCat3997/gitops-rookie
+        ref: HEAD
+        path: terraform-app/terraform-resources
+  secretRef:
+    name: aws-credentials
